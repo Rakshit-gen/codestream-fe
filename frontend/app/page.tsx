@@ -23,6 +23,7 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
+import { getBackendUrl } from '@/lib/utils'
 
 export default function Home() {
   const router = useRouter()
@@ -41,7 +42,7 @@ export default function Home() {
   const createSession = async () => {
     setCreating(true)
     try {
-      const response = await fetch('http://localhost:8080/api/sessions', {
+        const response = await fetch(`${getBackendUrl()}/api/sessions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

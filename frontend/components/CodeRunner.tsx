@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { getBackendUrl } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Play, Loader2, Terminal, AlertCircle } from 'lucide-react'
@@ -27,7 +28,7 @@ export function CodeRunner({ code, language }: CodeRunnerProps) {
     setExecutionTime('')
 
     try {
-      const response = await fetch('http://localhost:8080/api/run', {
+      const response = await fetch(`${getBackendUrl()}/api/run`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { getBackendUrl } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Sparkles, Lightbulb, Loader2 } from 'lucide-react'
@@ -24,7 +25,7 @@ export function AIPanel({ code, language }: AIPanelProps) {
     setAnalysis('')
 
     try {
-      const response = await fetch('http://localhost:8080/api/analyze', {
+      const response = await fetch(`${getBackendUrl()}/api/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ export function AIPanel({ code, language }: AIPanelProps) {
     setSuggestions('')
 
     try {
-      const response = await fetch('http://localhost:8080/api/suggest', {
+      const response = await fetch(`${getBackendUrl()}/api/suggest`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -33,7 +33,12 @@ export function useWebSocket(
   const connect = useCallback(() => {
     if (wsRef.current?.readyState === WebSocket.OPEN) return
 
-    const wsUrl = `ws://localhost:8080/ws?session=${sessionId}&user_id=${userId}&user_name=${encodeURIComponent(
+    // Use environment variable for backend URL, fallback to localhost for development
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'
+    const wsProtocol = backendUrl.startsWith('https') ? 'wss' : 'ws'
+    const wsHost = backendUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
+    
+    const wsUrl = `${wsProtocol}://${wsHost}/ws?session=${sessionId}&user_id=${userId}&user_name=${encodeURIComponent(
       userName
     )}&user_email=${encodeURIComponent(userEmail)}&user_color=${encodeURIComponent(
       userColor

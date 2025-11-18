@@ -5,6 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// Get backend API URL from environment variable or default to localhost
+export function getBackendUrl(): string {
+  return process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'
+}
+
 export function generateColor(id: string): string {
   const colors = [
     '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16',

@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useWebSocket } from '@/hooks/use-websocket'
 import { useToast } from '@/hooks/use-toast'
-import { generateColor } from '@/lib/utils'
+import { generateColor, getBackendUrl } from '@/lib/utils'
 import { Copy, Loader2, Code2, ArrowLeft, Sparkles, Play } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -78,7 +78,7 @@ export default function SessionPage() {
     const fetchSession = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/sessions/${sessionId}`
+          `${getBackendUrl()}/api/sessions/${sessionId}`
         )
         if (!response.ok) throw new Error('Session not found')
 
