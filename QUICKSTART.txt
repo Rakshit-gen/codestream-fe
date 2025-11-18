@@ -1,0 +1,167 @@
+╔═══════════════════════════════════════════════════════════════╗
+║              CODESTREAM - QUICK START GUIDE                   ║
+╚═══════════════════════════════════════════════════════════════╝
+
+⚡ GET RUNNING IN 5 MINUTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: GET YOUR API KEYS
+──────────────────────────
+1. Anthropic API Key: https://console.anthropic.com/
+   → Create account → Get API key
+   
+2. Clerk Keys: https://dashboard.clerk.com/
+   → Create application → Copy keys
+
+
+STEP 2: RUN SETUP
+─────────────────
+cd codestream
+chmod +x setup.sh
+./setup.sh
+
+
+STEP 3: CONFIGURE
+─────────────────
+Edit backend/.env:
+  ANTHROPIC_API_KEY=sk-ant-xxxxx
+
+Edit frontend/.env.local:
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxxxx
+  CLERK_SECRET_KEY=sk_test_xxxxx
+
+
+STEP 4: START SERVICES
+──────────────────────
+Terminal 1:  npm run docker:up    # Start Redis
+Terminal 2:  npm run dev:backend  # Start Go server (port 8080)
+Terminal 3:  npm run dev:frontend # Start Next.js (port 3000)
+
+
+STEP 5: USE THE APP
+───────────────────
+1. Open http://localhost:3000
+2. Sign up with Clerk
+3. Click "Start New Session"
+4. Share link with teammates
+5. Code together & use AI features!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 WHAT YOU GET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ Real-time cursor tracking across all users
+✨ Live code synchronization 
+✨ AI code analysis (powered by Claude)
+✨ AI improvement suggestions
+✨ Beautiful glassmorphism UI
+✨ Monaco Editor (VS Code engine)
+✨ Multi-language support
+✨ User presence indicators
+✨ Session sharing via links
+✨ Auto-reconnecting WebSockets
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem: Can't connect to Redis
+Solution: 
+  docker ps | grep redis
+  npm run docker:down && npm run docker:up
+
+Problem: WebSocket connection failed
+Solution:
+  • Check backend is running on port 8080
+  • Check browser console for errors
+  • Verify no firewall blocking
+
+Problem: AI not working
+Solution:
+  • Verify ANTHROPIC_API_KEY in backend/.env
+  • Check backend logs for API errors
+  • Ensure API key has credits
+
+Problem: Can't sign in
+Solution:
+  • Verify Clerk keys in frontend/.env.local
+  • Check Clerk dashboard
+  • Clear browser cache
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 PROJECT STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+backend/           → Go WebSocket server
+  handlers/        → HTTP & WebSocket handlers
+  services/        → Redis & AI integration
+  models/          → Data structures
+  main.go          → Entry point
+
+frontend/          → Next.js app
+  app/             → Pages (App Router)
+  components/      → React components
+  hooks/           → Custom React hooks
+  lib/             → Utilities
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 PRODUCTION DEPLOYMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Backend:
+  cd backend
+  go build -o codestream
+  ./codestream
+  
+Frontend:
+  cd frontend
+  npm run build
+  npm run start
+  
+Deploy to:
+  • Backend → AWS EC2, DigitalOcean, Railway
+  • Frontend → Vercel, Netlify
+  • Redis → AWS ElastiCache, Redis Cloud
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 PRO TIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Sessions expire after 24 hours (configurable in Redis)
+• Each user gets a unique color for their cursor
+• Code changes save automatically to Redis
+• AI analysis uses streaming for better UX
+• WebSocket auto-reconnects if disconnected
+• Use "Copy Link" to share sessions
+• Support for JavaScript, Python, Go, and more
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SETUP.txt     → Comprehensive setup guide
+FEATURES.txt  → Visual feature overview
+This file     → Quick start guide
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 YOU'RE READY TO GO!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Built with:
+  ❤️  Go + Next.js + Redis + Claude AI
+  
+Happy coding! 🚀

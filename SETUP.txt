@@ -1,0 +1,225 @@
+CodeStream - Real-time Collaborative Code Review Platform
+=========================================================
+
+A production-ready application for real-time code collaboration with AI-powered analysis.
+
+TECH STACK:
+-----------
+Backend:  Go, WebSocket, Redis, Chi Router
+Frontend: Next.js 14, TypeScript, Monaco Editor, Tailwind CSS, Framer Motion
+Auth:     Clerk
+AI:       Anthropic Claude API
+Database: Redis for real-time state
+
+PREREQUISITES:
+--------------
+1. Docker & Docker Compose (for Redis)
+2. Go 1.21+ (https://golang.org/dl/)
+3. Node.js 18+ (https://nodejs.org/)
+4. Anthropic API Key (https://console.anthropic.com/)
+5. Clerk Account (https://clerk.com/)
+
+QUICK START:
+------------
+
+1. Clone and setup:
+   cd codestream
+   ./setup.sh
+
+2. Configure environment variables:
+
+   Backend (backend/.env):
+   -----------------------
+   PORT=8080
+   REDIS_URL=localhost:6379
+   REDIS_PASSWORD=
+   ANTHROPIC_API_KEY=sk-ant-xxxxx
+
+   Frontend (frontend/.env.local):
+   --------------------------------
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxxxx
+   CLERK_SECRET_KEY=sk_test_xxxxx
+   NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+   NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+   NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+   NEXT_PUBLIC_API_URL=http://localhost:8080
+   NEXT_PUBLIC_WS_URL=ws://localhost:8080
+
+3. Start services:
+
+   Terminal 1 - Redis:
+   npm run docker:up
+
+   Terminal 2 - Backend:
+   npm run dev:backend
+
+   Terminal 3 - Frontend:
+   npm run dev:frontend
+
+4. Access the application:
+   http://localhost:3000
+
+FEATURES:
+---------
+✅ Real-time cursor synchronization
+✅ Live code editing across multiple users
+✅ AI-powered code analysis
+✅ AI improvement suggestions
+✅ User presence indicators
+✅ Beautiful glassmorphism UI
+✅ Monaco Editor with syntax highlighting
+✅ WebSocket auto-reconnection
+✅ Session sharing via links
+
+USAGE:
+------
+1. Sign up/Sign in with Clerk
+2. Click "Start New Session" on homepage
+3. Share the session link with teammates
+4. Code together in real-time
+5. Use AI buttons to get instant code analysis
+
+ARCHITECTURE:
+-------------
+Backend:
+- WebSocket server for real-time communication
+- Redis pub/sub for message broadcasting
+- Session management with Redis storage
+- Streaming AI responses from Claude API
+- CORS-enabled for Next.js frontend
+
+Frontend:
+- Next.js 14 App Router
+- Clerk authentication
+- Monaco Editor with custom decorations
+- WebSocket client with auto-reconnect
+- Framer Motion animations
+- shadcn/ui components
+
+API ENDPOINTS:
+--------------
+WebSocket:
+  ws://localhost:8080/ws?session={id}&user_id={id}&user_name={name}&...
+
+HTTP:
+  POST   /api/sessions          - Create new session
+  GET    /api/sessions/:id      - Get session details
+  POST   /api/sessions/:id/join - Join session
+  POST   /api/analyze           - Analyze code with AI
+  POST   /api/suggest           - Get AI suggestions
+
+WEBSOCKET EVENTS:
+-----------------
+Client -> Server:
+  - cursor_move: Broadcast cursor position
+  - code_change: Broadcast code updates
+  - ping: Keep connection alive
+
+Server -> Client:
+  - cursor_move: Receive others' cursor positions
+  - code_change: Receive code updates
+  - user_join: New user joined
+  - user_leave: User left session
+  - pong: Ping response
+
+DEVELOPMENT:
+------------
+Backend Development:
+  cd backend
+  go run .
+
+Frontend Development:
+  cd frontend
+  npm run dev
+
+Build for Production:
+  npm run build:backend
+  npm run build:frontend
+
+TROUBLESHOOTING:
+----------------
+Redis Connection Issues:
+  - Ensure Docker is running
+  - Check: docker ps | grep redis
+  - Restart: npm run docker:down && npm run docker:up
+
+WebSocket Connection Issues:
+  - Check backend is running on port 8080
+  - Verify CORS settings in main.go
+  - Check browser console for errors
+
+Clerk Authentication Issues:
+  - Verify API keys in .env.local
+  - Check Clerk dashboard for correct URLs
+  - Ensure middleware.ts is properly configured
+
+AI Analysis Issues:
+  - Verify ANTHROPIC_API_KEY is correct
+  - Check API quota and limits
+  - View backend logs for errors
+
+PORT CONFIGURATION:
+-------------------
+Backend:  8080
+Frontend: 3000
+Redis:    6379
+
+SECURITY NOTES:
+---------------
+- Backend has NO authentication middleware (as per requirements)
+- Clerk handles frontend auth only
+- Add backend auth for production use
+- Keep API keys secure and never commit them
+- Use environment variables for all secrets
+
+PROJECT STRUCTURE:
+------------------
+codestream/
+├── backend/
+│   ├── handlers/     # WebSocket and HTTP handlers
+│   ├── models/       # Data structures
+│   ├── services/     # Redis and AI services
+│   ├── main.go       # Entry point
+│   └── go.mod
+├── frontend/
+│   ├── app/          # Next.js pages
+│   ├── components/   # React components
+│   ├── hooks/        # Custom hooks
+│   ├── lib/          # Utilities
+│   └── package.json
+└── docker-compose.yml
+
+PRODUCTION DEPLOYMENT:
+----------------------
+1. Build applications:
+   npm run build:backend
+   npm run build:frontend
+
+2. Set production environment variables
+
+3. Deploy backend to cloud service (AWS, GCP, etc.)
+
+4. Deploy frontend to Vercel/Netlify
+
+5. Use managed Redis (AWS ElastiCache, Redis Cloud)
+
+6. Add proper authentication to backend endpoints
+
+7. Set up SSL/TLS certificates
+
+8. Configure proper CORS origins
+
+9. Set up monitoring and logging
+
+10. Implement rate limiting
+
+SUPPORT:
+--------
+For issues and questions:
+- Check browser console for errors
+- Check backend logs
+- Verify all environment variables are set
+- Ensure all services are running
+
+Built with ❤️ using Go, Next.js, and Claude AI

@@ -1,0 +1,23 @@
+{
+  "name": "codestream",
+  "version": "1.0.0",
+  "description": "Real-time collaborative code review platform with AI assistance",
+  "scripts": {
+    "setup": "./setup.sh",
+    "dev:backend": "cd backend && go run .",
+    "dev:frontend": "cd frontend && npm run dev",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "build:backend": "cd backend && go build -o codestream",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "code-review",
+    "collaboration",
+    "websocket",
+    "ai",
+    "monaco-editor"
+  ],
+  "author": "",
+  "license": "MIT"
+}
